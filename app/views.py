@@ -3,8 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
-from app.forms import FormUsuario
+from app.forms import *
+from django.urls import reverse
 # Create your views here.
+
 
 def app(request):
     pagina_config = Pagina.objects.first()
@@ -52,3 +54,18 @@ def dashboard(request):
     return render(request, "dashboard.html", {"usuario":request.user})
 
         
+def planos(request):
+    planos =  Planos.objects.all()
+    return render(request,'planos.html',{"planos":planos})
+
+def contato(request):
+    if request.method == "POST":
+        form = ContatoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Sua Mensagem foi enviada com sucesso')
+            return redirect(reverse('contato'))
+    else:
+        form = ContatoForm()
+    return render (request,'contato.html',{"form":form})   
+  

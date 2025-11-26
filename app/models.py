@@ -40,3 +40,36 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome_produto  
+    
+class Contato(models.Model):
+
+    #Contato
+    nome = models.CharField(max_length= 100, verbose_name=" Nome para Contato")
+    email =  models.EmailField(verbose_name="E-mail de Contato",unique=True)
+    mensagem = models.CharField(max_length=500,verbose_name="Mesagem para Contato")
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nome
+
+class Planos(models.Model):
+
+    #Planos
+    tipo_plano = models.CharField(max_length= 100, verbose_name="Tipo do Plano")
+    descricao_plano = models.CharField(max_length=120,verbose_name="Descrição do Plano")
+    preco_plano =  models.DecimalField(max_digits=5,decimal_places=2,verbose_name="Preço do Plano")
+
+    def __str__(self):
+        return self.tipo_plano
+
+class Pedido (models.Model):
+
+    #Pedidos 
+    usuario = models.CharField(max_length=50,verbose_name="Nome do  usuario")    
+    produto = models.IntegerField(validators=[MaxValueValidator(100),MinValueValidator(1)],verbose_name="Estoque de Produtos")
+    quatidade = models.IntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)],verbose_name="quantidade de Produto por Pedidos")
+    total = models.IntegerField(validators=[MaxValueValidator(4),MinValueValidator(0)],verbose_name="Total de Pedidos ")
+    data = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.usuario

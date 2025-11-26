@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Planos de Assinatura{% endblock %}
+
+{% block conteudo %}
+
+   <div class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        
+        <div class="mx-auto max-w-2xl text-center mb-12">
+            <h2 class="text-3xl font-bold tracking-tight text-blue-950 sm:text-4xl uppercase">Nossos Planos de Acesso</h2>
+            <p class="mt-2 text-lg leading-8 text-gray-600">Escolha o plano ideal para suas necessidades.</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+            
+            {% for plano in planos %}
+            <div class="group relative bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 transform hover:scale-[1.03] border-t-8 border-blue-600">
+                
+                <div class="p-6 bg-blue-50">
+                    <h3 class="text-2xl font-extrabold text-blue-950 text-center uppercase">
+                        {{ plano.tipo_plano }}
+                    </h3>
+                </div>
+
+                <div class="p-6">
+                    
+                    <div class="text-center mb-4">
+                        <p class="text-xl font-medium text-gray-500">A partir de</p>
+                        <p class="text-5xl font-extrabold text-blue-600">
+                            R$ {{ plano.preco_plano|stringformat:".2f" }} 
+                        </p>
+                        <p class="text-gray-500">/ Mês</p>
+                    </div>
+
+                    <div class="mt-6 border-t pt-4">
+                        <p class="text-sm font-semibold text-gray-900 mb-2">Descrição:</p>
+                        <p class="text-md leading-relaxed text-gray-600 min-h-[50px]">
+                            {{ plano.descricao_plano }}
+                        </p>
+                    </div>
+
+                    <div class="mt-8">
+                        <button class="w-full bg-blue-950 text-white px-4 py-3 rounded-xl text-lg font-bold hover:bg-yellow-500 hover:text-blue-950 transition-colors shadow-lg">
+                            Assinar Plano
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
