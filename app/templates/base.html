@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block titulo %}CTC Moica{% endblock %}</title>
+    <title>{% block titulo %}CTC - Hawks {% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/img_hawk-LOGO.png' %}">
     <link href="{% static 'output.css' %}" rel="stylesheet">
 </head>
 <body class="flex flex-col min-h-screen bg-slate-900 text-gray-100 overflow-x-hidden">
@@ -32,7 +33,7 @@
                 </div>
                 
                 <div class="hidden lg:flex lg:gap-x-12">
-                    <a href="#" class="text-sm font-semibold leading-6 text-white hover:text-yellow-400 transition-colors">Planos</a>
+                    <a href="{%url 'planos'%}" class="text-sm font-semibold leading-6 text-white hover:text-yellow-400 transition-colors">Planos</a>
                     <a href="{% url 'produtos' %}" class="text-sm font-semibold leading-6 text-white hover:text-yellow-400 transition-colors">Produtos</a>
                     <a href="{% url 'app' %}#sobre" class="text-sm font-semibold leading-6 text-white hover:text-yellow-400 transition-colors">Sobre</a>
                     <a href="{% url 'app' %}#contato" class="text-sm font-semibold leading-6 text-white hover:text-yellow-400 transition-colors">Contato</a>
@@ -87,7 +88,7 @@
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-gray-500/25">
                         <div class="space-y-2 py-6">
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Planos</a>
+                            <a href="{% url 'planos'%}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Planos</a>
                             <a href="{% url 'produtos' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Produtos</a>
                             <a href="{% url 'app' %}#sobre" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Sobre</a>
                             <a href="{% url 'app' %}#contato" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Contato</a>

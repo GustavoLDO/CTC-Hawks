@@ -5,6 +5,7 @@
     {{ pagina.nome_do_site|default:"CTC Hawks" }} - Home 
 {% endblock %}
 
+
 {% block conteudo %}
 
     <div class="relative isolate overflow-hidden pt-14 h-[85vh] flex items-center justify-center bg-black">
@@ -23,7 +24,7 @@
             </p>
             
             <div class="mt-10 flex items-center justify-center gap-x-6">
-                <a href="#" class="rounded-md bg-yellow-500 px-8 py-3.5 text-lg font-bold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 transition-all hover:-translate-y-1">
+                <a href="{%url 'planos'%}" class="rounded-md bg-yellow-500 px-8 py-3.5 text-lg font-bold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 transition-all hover:-translate-y-1">
                     QUERO TREINAR
                 </a>
             </div>
