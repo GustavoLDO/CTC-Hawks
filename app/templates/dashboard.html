@@ -1,7 +1,118 @@
 {% extends "base.html" %}
 
-{% block titulo %} Dashboard - CTC Moica {% endblock %}
+{% block titulo %} Dashboard - Carrinho {% endblock %}
 
 {% block conteudo %}
-    <h1>Dashboard</h1>
+<div class="bg-slate-900 min-h-screen py-12">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        
+        <div class="md:flex md:items-center md:justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-black tracking-tight text-white uppercase sm:text-4xl">Meu Carrinho</h1>
+                <p class="text-gray-400 mt-2">Confira seus itens antes de finalizar.</p>
+            </div>
+            <a href="{% url 'produtos' %}" class="mt-4 md:mt-0 text-yellow-500 hover:text-yellow-400 font-semibold flex items-center gap-2">
+                &larr; Continuar Comprando
+            </a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-6 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-500/10 text-green-400{% else %}bg-red-500/10 text-red-400{% endif %} border border-current">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if itens %}
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                    
+                    <div class="relative overflow-hidden shadow-2xl ring-1 ring-white/10 sm:rounded-2xl bg-slate-800/50 backdrop-blur-sm">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-slate-800">
+                                <tr>
+                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Produto / Plano</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Preço Unit.</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Qtd.</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Subtotal</th>
+                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 text-yellow-500">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                {% for pedido in itens %}
+                                <tr class="hover:bg-slate-800/80 transition-colors">
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                        <div class="flex items-center">
+                                            <div class="h-16 w-16 flex-shrink-0 rounded-lg overflow-hidden border border-gray-700 bg-gray-900 flex items-center justify-center">
+                                                {% if pedido.imagem_item %}
+                                                    <img class="h-full w-full object-cover" src="{{ pedido.imagem_item }}" alt="">
+                                                {% else %}
+                                                    <svg class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                                    </svg>
+                                                {% endif %}
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-bold text-white text-lg">{{ pedido.nome_item }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                        {% if pedido.produto %}
+                                            R$ {{ pedido.produto.preco_produto }}
+                                        {% elif pedido.plano %}
+                                            R$ {{ pedido.plano.preco_plano }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                        <form action="{% url 'atualizar_quantidade' pedido.id %}" method="POST" class="flex items-center gap-2">
+                                            {% csrf_token %}
+                                            <input type="number" name="quantidade" value="{{ pedido.quantidade }}" min="1" 
+                                                class="w-16 rounded bg-slate-700 border-gray-600 text-white text-center text-sm py-1">
+                                            <button type="submit" class="text-yellow-500 hover:text-white" title="Atualizar">
+                                                &#x21bb;
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm font-bold text-yellow-400">
+                                        R$ {{ pedido.preco_total }}
+                                    </td>
+                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <a href="{% url 'remover_carrinho' pedido.id %}" class="text-red-400 hover:text-red-300 font-bold uppercase text-xs">Excluir</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-8 flex justify-end">
+                        <div class="bg-slate-800 rounded-2xl p-6 w-full max-w-md shadow-xl border border-gray-700">
+                            <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+                                <span class="text-xl font-bold text-white">Total</span>
+                                <span class="text-2xl font-black text-yellow-400">R$ {{ total }}</span>
+                            </div>
+                            <button class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-lg uppercase tracking-wide">
+                                Finalizar Pedido
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-20 bg-slate-800/30 rounded-3xl border-2 border-dashed border-gray-700 mt-8">
+            <h3 class="mt-2 text-xl font-bold text-white">Seu carrinho está vazio</h3>
+            <div class="mt-6">
+                <a href="{% url 'produtos' %}" class="rounded-md bg-yellow-500 px-6 py-3 text-sm font-bold text-blue-950 hover:bg-yellow-400 uppercase">
+                    Ver Loja
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -59,17 +60,54 @@ class Planos(models.Model):
     descricao_plano = models.CharField(max_length=120,verbose_name="Descrição do Plano")
     preco_plano =  models.DecimalField(max_digits=5,decimal_places=2,verbose_name="Preço do Plano")
 
+    class Meta:
+        verbose_name = "Plano"
+        verbose_name_plural = "Planos"
+
     def __str__(self):
         return self.tipo_plano
 
 class Pedido (models.Model):
+    # ForeignKey conecta este pedido ao usuário logado (User do Django)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    #Pedidos 
-    usuario = models.CharField(max_length=50,verbose_name="Nome do  usuario")    
-    produto = models.IntegerField(validators=[MaxValueValidator(100),MinValueValidator(1)],verbose_name="Estoque de Produtos")
-    quatidade = models.IntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)],verbose_name="quantidade de Produto por Pedidos")
-    total = models.IntegerField(validators=[MaxValueValidator(4),MinValueValidator(0)],verbose_name="Total de Pedidos ")
+    # ForeignKey conecta ao Produto real no banco de dados
+    # null=True permite que o pedido seja de um Plano (sem produto)
+    produto = models.ForeignKey(Produto, on_delete=models.SET_NULL, null=True, blank=True)
+   
+    # null=True permite que o pedido seja de um Produto (sem plano)
+    plano = models.ForeignKey(Planos, on_delete=models.SET_NULL, null=True, blank=True)
+
+    quantidade = models.IntegerField(default=1, validators=[MaxValueValidator(100),MinValueValidator(0)],verbose_name="quantidade de Produto por Pedidos")
     data = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def preco_total(self):
+        if self.produto:
+            return self.quantidade * self.produto.preco_produto
+        elif self.plano:
+            return self.quantidade * self.plano.preco_plano
+        return 0
+
+    # Retorna o nome do item (seja produto ou plano) para o template
+    @property
+    def nome_item(self):
+        if self.produto:
+            return self.produto.nome_produto
+        elif self.plano:
+            return f"Plano: {self.plano.tipo_plano}"
+        return "Item desconhecido"
+
+    # Retorna a imagem (se for produto) para o template
+    @property
+    def imagem_item(self):
+        if self.produto and self.produto.imagem_produto:
+            return self.produto.imagem_produto.url
+        return None
+
+    class Meta:
+        verbose_name = "Item do Pedido"
+        verbose_name_plural = "Itens dos Pedidos"
+
     def __str__(self):
-        return self.usuario
+        return f"{self.quantidade}x {self.nome_item} ({self.usuario.username})"

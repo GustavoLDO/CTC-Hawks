@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block titulo %} {{ produto.nome_produto }} {% endblock %}
+
+{% block conteudo %}
+<div class="bg-slate-900 min-h-screen py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        
+        <a href="{% url 'produtos' %}" class="inline-flex items-center text-sm text-gray-400 hover:text-yellow-400 mb-8 transition-colors">
+            &larr; Voltar para Loja
+        </a>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            
+            <!-- Imagem -->
+            <div class="rounded-2xl overflow-hidden bg-white shadow-2xl border border-gray-700">
+                {% if produto.imagem_produto %}
+                    <img src="{{ produto.imagem_produto.url }}" alt="{{ produto.nome_produto }}" class="w-full h-full object-cover max-h-[500px]">
+                {% else %}
+                    <div class="w-full h-96 flex items-center justify-center bg-gray-800 text-gray-500">Sem Imagem</div>
+                {% endif %}
+            </div>
+
+            <!-- Infos -->
+            <div>
+                <h1 class="text-4xl font-black text-white uppercase tracking-tight">{{ produto.nome_produto }}</h1>
+                <p class="mt-4 text-3xl font-bold text-yellow-400">R$ {{ produto.preco_produto }}</p>
+
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold text-white">Descrição</h3>
+                    <p class="text-gray-400 mt-2 leading-relaxed">{{ produto.descricao_produto }}</p>
+                </div>
+
+                <div class="mt-8 border-t border-gray-700 pt-8">
+                    <p class="text-sm text-gray-400 mb-4">
+                        Estoque: 
+                        {% if produto.estoque_produto > 0 %}
+                            <span class="text-green-400 font-bold">{{ produto.estoque_produto }} unidades</span>
+                        {% else %}
+                            <span class="text-red-400 font-bold">Esgotado</span>
+                        {% endif %}
+                    </p>
+
+                    {% if produto.estoque_produto > 0 %}
+                        <form action="{% url 'adicionar_carrinho' produto.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-black text-lg py-4 px-8 rounded-xl shadow-lg shadow-yellow-500/20 transition-all hover:-translate-y-1 uppercase tracking-wide">
+                                Adicionar ao Carrinho
+                            </button>
+                        </form>
+                    {% else %}
+                        <button disabled class="w-full bg-gray-700 text-gray-400 font-bold text-lg py-4 px-8 rounded-xl cursor-not-allowed">
+                            Indisponível
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
