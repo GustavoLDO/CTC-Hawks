@@ -56,7 +56,7 @@ Siga estas instruções para configurar e executar o projeto em seu ambiente de 
 ### 2. Clonagem do Repositório
 
 ```bash
-git clone [https://github.com/GustavoInCode24/CTC-Hawks.git](https://github.com/GustavoInCode24/CTC-Hawks.git)
+git clone [https://github.com/GustavoInCode24/CTC-Hawks.git]
 cd CTC-Hawks
 ````
 
