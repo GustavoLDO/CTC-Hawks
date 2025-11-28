@@ -52,6 +52,7 @@ Siga estas instruções para configurar e executar o projeto em seu ambiente de 
 
 * Python 3.8+
 * Git
+* Node
 
 ### 2. Clonagem do Repositório
 
