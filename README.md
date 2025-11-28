@@ -37,7 +37,7 @@ Este projeto é baseado em uma *stack* tecnológica moderna e robusta, com ênfa
 O projeto está totalmente funcional e hospedado na plataforma **PythonAnywhere**.
 
 ### 🔗 URL de Produção
-> **`https://ctchawkspg.pythonanywhere.com/`**
+> https://ctchawkspg.pythonanywhere.com/
 
 ### ☁️ Plataforma de Deploy
 O deploy foi realizado utilizando o **PythonAnywhere**, um serviço PaaS (Platform as a Service) que facilita a hospedagem de aplicações Python, como Django e Flask.
@@ -120,9 +120,7 @@ Contribuições são sempre bem-vindas! Se você deseja colaborar com o projeto,
 Este projeto foi desenvolvido em colaboração por:
 
 * **Gustavo Lemos De Oliveira**
+    * GitHub: [GustavoInCode24](https://github.com/GustavoInCode24)
 * **Lucas Henrique Neves Sousa**
-
-| **Gustavo Lemos De Oliveira** | [![GitHub Badge](https://img.shields.io/badge/GitHub-GustavoInCode24-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GustavoInCode24) |
-| **Lucas Henrique N. S.** | [![GitHub Badge](https://img.shields.io/badge/GitHub-yonevxs-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yonevxs) |
-
+    * GitHub: [yonevxs](https://github.com/yonevxs)
 
